@@ -11,40 +11,75 @@ function getComputerChoice(){
     }
 
 }
-let compChoice=getComputerChoice();
-console.log(compChoice);
-
-
 function getHumanChoice() {
-  const chButton = document.querySelector("#playButton");
-  const log = document.querySelector("#log");
+  // 1. Ζητάμε την επιλογή του χρήστη κατευθείαν με prompt
+  let choice = prompt("Please enter your choice (Rock, Paper, or Scissors):");
 
-  if (!chButton || !log) {
-    console.warn("Missing #playButton or #log element");
-    return;
+  if (choice === null) {
+      return "Please enter a valid choice!";
   }
 
-  chButton.addEventListener("click", () => {
-    const raw = prompt("Please enter your choice:");
-    if (raw === null) {
-      log.innerText = "OK, maybe next time.";
-      return;
-    }
-
-    const choice = raw.trim().toLowerCase();
-
-    if (choice === "rock") {
-      log.innerText = "Rock";
-    } else if (choice === "paper") {
-      log.innerText = "Paper";
-    } else if (choice === "scissors") {
-      log.innerText = "Scissors";
-    } else if (choice === "") {
-      log.innerText = "You didn't enter anything.";
-    } else {
-      log.innerText = "Please enter one of three options: Rock, Paper, or Scissors";
-    }
-  });
+  return choice.toLowerCase();
 }
-let HumanChoice=getHumanChoice();
-console.log(HumanChoice);
+
+function playGame() {
+   let humanScore=0;
+   let computerScore=0;
+
+ function playRound(humanChoice,compChoice){
+  if(humanChoice.toLowerCase()==="paper"){
+    if(compChoice.toLowerCase()==="rock"){
+      humanScore++;
+      console.log("You win! Paper beats Rock");}
+    else if(compChoice.toLowerCase()==="paper"){
+      console.log("Same choice!Nobody takes any point");}
+    else if(compChoice.toLowerCase()==="scissors"){
+      computerScore++;
+       console.log("You lose! Scissors beats Paper");
+    } 
+   }
+    else if(humanChoice.toLowerCase()==="rock"){
+        if(compChoice.toLowerCase()==="paper"){
+            computerScore++;
+            console.log("You lose! Paper beats Rock");}
+        else if(compChoice.toLowerCase()==="rock"){
+            console.log("Same choice!Nobody takes any point");}
+         else if(compChoice.toLowerCase()==="scissors"){
+             humanScore++;
+              console.log("You win! Rock beats Scissors");}               
+    }
+    else{
+        if(compChoice.toLowerCase()==="paper"){
+             humanScore++;
+             console.log("You win! Scissors beats Paper");}
+        else if(compChoice.toLowerCase()==="rock"){
+             computerScore++;
+             console.log("You lose! Rock beats Scissors");}
+         else if(compChoice.toLowerCase()==="scissors"){
+             console.log("Same choice!Nobody takes any point");
+             }   
+        }       
+ }
+
+console.log("Game Started!");
+
+  for(let i=0;i<5;i++){
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        
+        console.log("Round " + (i + 1));
+        playRound(humanSelection, computerSelection);
+        console.log("-----------------------");
+    }
+
+    // ΤΕΛΙΚΟ ΑΠΟΤΕΛΕΣΜΑ
+    console.log("Final Score -> You: " + humanScore + " | Computer: " + computerScore);
+    if (humanScore > computerScore) {
+        console.log("CONGRATULATIONS! YOU WON THE GAME!");
+    } else if (humanScore < computerScore) {
+        console.log("GAME OVER. THE COMPUTER WON.");
+    } else {
+        console.log("IT'S A DRAW!");
+    }
+  }    
+playGame();
