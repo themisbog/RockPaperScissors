@@ -1,5 +1,5 @@
 function getComputerChoice(){
-    let num=Math.random;
+    let num=Math.random();
     if(num<1/3){
         return "Rock";
     }
@@ -11,75 +11,72 @@ function getComputerChoice(){
     }
 
 }
-function getHumanChoice() {
-  // 1. Ζητάμε την επιλογή του χρήστη κατευθείαν με prompt
-  let choice = prompt("Please enter your choice (Rock, Paper, or Scissors):");
+let humanScore=0;
+let computerScore=0;
 
-  if (choice === null) {
-      return "Please enter a valid choice!";
-  }
+const btn1 = document.querySelector("#btnRock");
+btn1.addEventListener("click", () => {
+  playRound("rock",getComputerChoice());    
+});
 
-  return choice.toLowerCase();
-}
+const btn2 = document.querySelector("#btnPaper");
+btn2.addEventListener("click", () => {
+  playRound("paper",getComputerChoice());
+});
 
-function playGame() {
-   let humanScore=0;
-   let computerScore=0;
+const btn3 = document.querySelector("#btnScissors");
+btn3.addEventListener("click", () => {
+  playRound("scissors",getComputerChoice());
+});
 
- function playRound(humanChoice,compChoice){
+function playRound(humanChoice,compChoice){
+    const resultsContainer = document.querySelector("#results"); 
+    const scoreContainer = document.querySelector("#currentScore");
+    const FinalContainer = document.querySelector("#final-announcement");  
+
   if(humanChoice.toLowerCase()==="paper"){
     if(compChoice.toLowerCase()==="rock"){
       humanScore++;
-      console.log("You win! Paper beats Rock");}
+      resultsContainer.textContent = "You win! Paper beats Rock";}
     else if(compChoice.toLowerCase()==="paper"){
-      console.log("Same choice!Nobody takes any point");}
+      resultsContainer.textContent ="Same choice!Nobody takes any point."}
     else if(compChoice.toLowerCase()==="scissors"){
       computerScore++;
-       console.log("You lose! Scissors beats Paper");
+       resultsContainer.textContent ="You lose! Scissors beats Paper";
     } 
    }
     else if(humanChoice.toLowerCase()==="rock"){
         if(compChoice.toLowerCase()==="paper"){
             computerScore++;
-            console.log("You lose! Paper beats Rock");}
+            resultsContainer.textContent ="You lose! Paper beats Rock";}
         else if(compChoice.toLowerCase()==="rock"){
-            console.log("Same choice!Nobody takes any point");}
+            resultsContainer.textContent ="Same choice!Nobody takes any point";}
          else if(compChoice.toLowerCase()==="scissors"){
              humanScore++;
-              console.log("You win! Rock beats Scissors");}               
+              resultsContainer.textContent ="You win! Rock beats Scissors";}               
     }
     else{
         if(compChoice.toLowerCase()==="paper"){
              humanScore++;
-             console.log("You win! Scissors beats Paper");}
+             resultsContainer.textContent ="You win! Scissors beats Paper";}
         else if(compChoice.toLowerCase()==="rock"){
              computerScore++;
-             console.log("You lose! Rock beats Scissors");}
+             resultsContainer.textContent ="You lose! Rock beats Scissors";}
          else if(compChoice.toLowerCase()==="scissors"){
-             console.log("Same choice!Nobody takes any point");
+             resultsContainer.textContent ="Same choice!Nobody takes any point";
              }   
-        }       
- }
+        }     
+        scoreContainer.textContent ="Final Score -> You: " + humanScore + " | Computer: " + computerScore;
+        if(humanScore==5 || computerScore==5){
+            if (humanScore > computerScore) {
+                 FinalContainer.textContent="CONGRATULATIONS! YOU WON THE GAME!";
+            } else if (humanScore < computerScore) {
+                 FinalContainer.textContent="GAME OVER. THE COMPUTER WON.";
+            } else {
+                 FinalContainer.textContent="IT'S A DRAW!";
+            }
 
-console.log("Game Started!");
-
-  for(let i=0;i<5;i++){
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
+        }
         
-        console.log("Round " + (i + 1));
-        playRound(humanSelection, computerSelection);
-        console.log("-----------------------");
-    }
+        }
 
-    // ΤΕΛΙΚΟ ΑΠΟΤΕΛΕΣΜΑ
-    console.log("Final Score -> You: " + humanScore + " | Computer: " + computerScore);
-    if (humanScore > computerScore) {
-        console.log("CONGRATULATIONS! YOU WON THE GAME!");
-    } else if (humanScore < computerScore) {
-        console.log("GAME OVER. THE COMPUTER WON.");
-    } else {
-        console.log("IT'S A DRAW!");
-    }
-  }    
-playGame();
